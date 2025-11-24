@@ -47,9 +47,14 @@ const HeroSection = () => {
                         AI 기반의 보안 솔루션으로 귀사의 미래를 보호하십시오.<br />
                         <span className="font-semibold text-white">ISO 27001, ISMS-P</span> 및 <span className="font-semibold text-white">IT Audit</span> 컨설팅.
                     </p>
-                    <button className="rounded-full bg-blue-600 px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-blue-700">
-                        Get a Quote
-                    </button>
+                    <a
+                        href="https://blog.naver.com/kjhkjh10114"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-block rounded-full bg-blue-600 px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-blue-700"
+                    >
+                        기업 소개
+                    </a>
                 </motion.div>
             </div>
         </section>

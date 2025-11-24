@@ -93,7 +93,7 @@ const Header = () => {
                         </li>
 
                         <li className="cursor-pointer hover:text-cyan-400 transition-colors">
-                            <a href="#about">회사 소개</a>
+                            <a href="https://blog.naver.com/kjhkjh10114" target="_blank" rel="noopener noreferrer">회사 소개</a>
                         </li>
                         <li>
                             <button
@@ -150,7 +150,7 @@ const Footer = () => {
                     <div>
                         <h4 className="mb-4 font-semibold text-cyan-400">Company</h4>
                         <ul className="space-y-2 text-gray-400">
-                            <li className="hover:text-cyan-400 transition-colors cursor-pointer">About</li>
+                            <li><a href="https://blog.naver.com/kjhkjh10114" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition-colors">About</a></li>
                             <li className="hover:text-cyan-400 transition-colors cursor-pointer">Careers</li>
                             <li className="hover:text-cyan-400 transition-colors cursor-pointer">Contact</li>
                         </ul>
