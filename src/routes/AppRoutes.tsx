@@ -10,6 +10,10 @@ import PredictiveAnalytics from '@/pages/PredictiveAnalytics';
 import FalsePositiveReduction from '@/pages/FalsePositiveReduction';
 import ISO27001 from '@/pages/ISO27001';
 import ISMSP from '@/pages/ISMSP';
+import AdminLayout from '@/layouts/AdminLayout';
+import AdminLogin from '@/pages/admin/AdminLogin';
+import AdminDashboard from '@/pages/admin/AdminDashboard';
+import ContentManager from '@/pages/admin/ContentManager';
 
 const AppRoutes = () => {
     return (
@@ -25,6 +29,15 @@ const AppRoutes = () => {
                 <Route path="ai-threat-detection/false-positive-reduction" element={<FalsePositiveReduction />} />
                 <Route path="consulting/iso27001" element={<ISO27001 />} />
                 <Route path="consulting/isms-p" element={<ISMSP />} />
+                <Route path="consulting/isms-p" element={<ISMSP />} />
+            </Route>
+
+            {/* Admin Routes */}
+            <Route path="/admin" element={<AdminLayout />}>
+                <Route path="login" element={<AdminLogin />} />
+                <Route path="dashboard" element={<AdminDashboard />} />
+                <Route path="content" element={<ContentManager />} />
+                <Route index element={<AdminDashboard />} />
             </Route>
         </Routes>
     );

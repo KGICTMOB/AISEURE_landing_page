@@ -1,6 +1,10 @@
 import { motion } from 'framer-motion';
+import { useContent } from '../context/ContentContext';
 
 const AIThreatHero = () => {
+    const { content } = useContent();
+    const { title, description1, description2, buttonText } = content.sections.aiThreatHero;
+
     return (
         <section className="relative h-screen w-full overflow-hidden bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900">
             {/* Animated Background Pattern */}
@@ -22,10 +26,7 @@ const AIThreatHero = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.2 }}
                     >
-                        현대 위협 탐지에 AI는{' '}
-                        <span className="bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent">
-                            가장 중요한 솔루션
-                        </span>
+                        {title}
                     </motion.h1>
 
                     <motion.div
@@ -34,16 +35,8 @@ const AIThreatHero = () => {
                         transition={{ duration: 0.8, delay: 0.4 }}
                         className="space-y-6 text-lg md:text-xl text-gray-300 leading-relaxed"
                     >
-                        <p>
-                            AI 시스템은 이제 사이버 보안 의사 결정의 초석입니다. 이러한 시스템은 광범위한 위협에 능숙하게 대응하고
-                            매우 정확한 사고 대응 전략을 자동화합니다. 이러한 발전은 빠르게 진화하는 사이버 위협의 본질과
-                            방대한 양의 위협 인텔리전스 입력을 관리해야 하는 과제에 대응하는 데 매우 중요합니다.
-                        </p>
-                        <p>
-                            AI 기반 위협 탐지는 IoT 기기, 클라우드 환경, 모바일 기기 등 공격 벡터의 확장과 같이
-                            탐지 및 완화가 어려운 진화하는 위협 전술을 방지하도록 설계되었고, 랜섬웨어를 비롯한
-                            사이버 공격의 규모와 속도가 증가하는 상황에 대응하는 것이 목표입니다.
-                        </p>
+                        <p>{description1}</p>
+                        <p>{description2}</p>
                     </motion.div>
 
                     <motion.div
@@ -56,7 +49,7 @@ const AIThreatHero = () => {
                             href="#features"
                             className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 px-8 py-4 text-lg font-semibold text-white transition-all hover:shadow-lg hover:shadow-cyan-500/50 hover:scale-105"
                         >
-                            주요 기능 살펴보기
+                            {buttonText}
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                             </svg>
