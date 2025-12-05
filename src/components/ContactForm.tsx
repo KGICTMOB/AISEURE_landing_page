@@ -38,7 +38,7 @@ const ContactForm = () => {
 
         setStatus('submitting');
 
-        const scriptUrl = 'https://script.google.com/macros/s/AKfycbwOD2DLvJehRQKytQJbxZfRDPa1kP8QBDFqoqG-pI9eb8pckzRSanh9clQjSBHnudgc6w/exec';
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbwK1BkLU-BMsAcK6ddSCxELlGTKTVgsCxO2GxmTU4gyJoTG1W02A9DEk45CpB21R1Y_/exec';
 
         try {
             const params = new URLSearchParams();
