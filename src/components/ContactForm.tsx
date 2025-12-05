@@ -42,14 +42,12 @@ const ContactForm = () => {
 
         try {
             const params = new URLSearchParams();
-            Object.entries(formData).forEach(([key, value]) => {
-                // Map privacyAgreement to human readable text
-                if (key === 'privacyAgreement') {
-                    params.append('privacyAgreement', value === 'agree' ? '동의함' : '동의하지 않음');
-                } else {
-                    params.append(key, value);
-                }
-            });
+            params.append('name', formData.name);
+            params.append('company', formData.company);
+            params.append('email', formData.email);
+            params.append('phone', formData.phone);
+            params.append('message', formData.message);
+            params.append('privacyAgreement', formData.privacyAgreement === 'agree' ? '동의함' : '동의하지 않음');
 
             await fetch(scriptUrl, {
                 method: 'POST',
