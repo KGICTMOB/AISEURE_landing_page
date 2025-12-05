@@ -1,9 +1,11 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import { initialContent, type ContentData, type ContentSection } from '../data/initialContent';
+import { initialContent, type ContentData, type ContentSection, type GlobalSettings, type ImageAssets } from '../data/initialContent';
 
 interface ContentContextType {
     content: ContentData;
     updateSection: (sectionKey: string, newData: ContentSection) => void;
+    updateGlobal: (newData: GlobalSettings) => void;
+    updateImages: (newData: ImageAssets) => void;
     resetContent: () => void;
 }
 
@@ -16,12 +18,18 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
         const storedContent = localStorage.getItem('siteContent');
         if (storedContent) {
             try {
-                setContent(JSON.parse(storedContent));
+                const parsed = JSON.parse(storedContent);
+                // Merge with initialContent to ensure new fields exist if local storage is old
+                setContent({ ...initialContent, ...parsed });
             } catch (error) {
                 console.error('Failed to parse stored content:', error);
             }
         }
     }, []);
+
+    const saveToStorage = (newContent: ContentData) => {
+        localStorage.setItem('siteContent', JSON.stringify(newContent));
+    };
 
     const updateSection = (sectionKey: string, newData: ContentSection) => {
         setContent((prevContent) => {
@@ -32,7 +40,29 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
                     [sectionKey]: newData,
                 },
             };
-            localStorage.setItem('siteContent', JSON.stringify(updatedContent));
+            saveToStorage(updatedContent);
+            return updatedContent;
+        });
+    };
+
+    const updateGlobal = (newData: GlobalSettings) => {
+        setContent((prevContent) => {
+            const updatedContent = {
+                ...prevContent,
+                global: newData,
+            };
+            saveToStorage(updatedContent);
+            return updatedContent;
+        });
+    };
+
+    const updateImages = (newData: ImageAssets) => {
+        setContent((prevContent) => {
+            const updatedContent = {
+                ...prevContent,
+                images: newData,
+            };
+            saveToStorage(updatedContent);
             return updatedContent;
         });
     };
@@ -43,7 +73,7 @@ export const ContentProvider = ({ children }: { children: ReactNode }) => {
     };
 
     return (
-        <ContentContext.Provider value={{ content, updateSection, resetContent }}>
+        <ContentContext.Provider value={{ content, updateSection, updateGlobal, updateImages, resetContent }}>
             {children}
         </ContentContext.Provider>
     );

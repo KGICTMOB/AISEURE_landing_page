@@ -1,5 +1,7 @@
 
 
+import ContactForm from './ContactForm';
+
 interface ContactModalProps {
     isOpen: boolean;
     onClose: () => void;
@@ -29,7 +31,7 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                 </button>
 
                 {/* Custom Header Banner - Replicating Google Forms Header */}
-                <div className="relative w-full h-48 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 overflow-hidden">
+                <div className="relative w-full h-48 bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 overflow-hidden shrink-0">
                     {/* Particle Effect Overlay */}
                     <div className="absolute inset-0 opacity-30">
                         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(59,130,246,0.5),transparent_50%)]"></div>
@@ -51,41 +53,14 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
                 </div>
 
                 {/* Form Title Section */}
-                <div className="bg-white px-8 py-6 border-b border-gray-200">
+                <div className="bg-white px-8 py-6 border-b border-gray-200 shrink-0">
                     <h2 className="text-3xl font-bold text-gray-900 mb-2">AISEURE 상담문의</h2>
                     <p className="text-gray-600">고객이 원하는 AI 보안에 대한 정보는 물론 솔루션과 컨설팅 문의에 친절히 대응해 드리겠습니다</p>
                 </div>
 
-                {/* Google Form Embed */}
+                {/* Contact Form Component */}
                 <div className="flex-1 overflow-auto bg-white">
-                    <iframe
-                        src="https://docs.google.com/forms/d/1Jxhe073XFkp-1jpYwHTbESuhY46BfjcNOnMmFSO_kFg/viewform?embedded=true&hl=ko"
-                        width="100%"
-                        height="100%"
-                        frameBorder="0"
-                        marginHeight={0}
-                        marginWidth={0}
-                        className="min-h-[500px]"
-                        title="AISEURE 상담문의"
-                    >
-                        로딩 중...
-                    </iframe>
-                </div>
-
-                {/* Footer Note */}
-                <div className="bg-gray-50 px-8 py-4 border-t border-gray-200">
-                    <p className="text-sm text-gray-600 text-center">
-                        * 구글 폼이 로드되지 않는 경우,{' '}
-                        <a
-                            href="https://docs.google.com/forms/d/1Jxhe073XFkp-1jpYwHTbESuhY46BfjcNOnMmFSO_kFg/viewform"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-700 underline font-medium"
-                        >
-                            여기를 클릭
-                        </a>
-                        하여 새 창에서 작성해주세요.
-                    </p>
+                    <ContactForm />
                 </div>
             </div>
         </div>

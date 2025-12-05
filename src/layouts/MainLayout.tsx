@@ -165,9 +165,20 @@ const Footer = () => {
     );
 };
 
+import { useContent } from '@/context/ContentContext';
+
 const MainLayout = () => {
+    const { content } = useContent();
+    const { primaryColor, secondaryColor } = content.global;
+
     return (
-        <div className="flex min-h-screen flex-col bg-black text-white">
+        <div
+            className="flex min-h-screen flex-col bg-black text-white"
+            style={{
+                '--primary-color': primaryColor,
+                '--secondary-color': secondaryColor,
+            } as React.CSSProperties}
+        >
             <Header />
             <main className="flex-grow">
                 <Outlet />

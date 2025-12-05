@@ -1,14 +1,35 @@
+export interface GlobalSettings {
+    primaryColor: string;
+    secondaryColor: string;
+    buttonShape: 'rounded' | 'pill' | 'square';
+}
+
+export interface ImageAssets {
+    [key: string]: string;
+}
+
 export interface ContentSection {
     [key: string]: string;
 }
 
 export interface ContentData {
+    global: GlobalSettings;
+    images: ImageAssets;
     sections: {
         [key: string]: ContentSection;
     };
 }
 
 export const initialContent: ContentData = {
+    global: {
+        primaryColor: '#2563eb', // blue-600
+        secondaryColor: '#4f46e5', // indigo-600
+        buttonShape: 'rounded'
+    },
+    images: {
+        logo: '/logo.png',
+        heroBackground: '/hero-bg.jpg'
+    },
     sections: {
         aiThreatHero: {
             title: "현대 위협 탐지에 AI는 가장 중요한 솔루션",
