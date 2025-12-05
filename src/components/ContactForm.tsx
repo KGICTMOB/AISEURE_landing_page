@@ -41,19 +41,19 @@ const ContactForm = () => {
         const scriptUrl = 'https://script.google.com/macros/s/AKfycbwOD2DLvJehRQKytQJbxZfRDPa1kP8QBDFqoqG-pI9eb8pckzRSanh9clQjSBHnudgc6w/exec';
 
         try {
-            const formDataObj = new FormData();
+            const params = new URLSearchParams();
             Object.entries(formData).forEach(([key, value]) => {
                 // Map privacyAgreement to human readable text
                 if (key === 'privacyAgreement') {
-                    formDataObj.append('privacyAgreement', value === 'agree' ? '동의함' : '동의하지 않음');
+                    params.append('privacyAgreement', value === 'agree' ? '동의함' : '동의하지 않음');
                 } else {
-                    formDataObj.append(key, value);
+                    params.append(key, value);
                 }
             });
 
             await fetch(scriptUrl, {
                 method: 'POST',
-                body: formDataObj,
+                body: params,
                 mode: 'no-cors' // Important for Google Apps Script Web App
             });
 
