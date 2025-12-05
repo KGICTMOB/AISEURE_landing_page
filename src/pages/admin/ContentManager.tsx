@@ -219,36 +219,74 @@ const ContentManager = () => {
                             {activeTab === 'images' && (
                                 <>
                                     {Object.entries(imagesForm).map(([key, value]) => (
-                                        <div key={key}>
+                                        <div key={key} className="border-b border-gray-100 pb-6 last:border-0">
                                             <label className="mb-2 block text-sm font-medium text-gray-700 capitalize">
-                                                {key.replace(/([A-Z])/g, ' $1').trim()} URL
+                                                {key.replace(/([A-Z])/g, ' $1').trim()}
                                             </label>
-                                            <input
-                                                type="text"
-                                                value={value}
-                                                onChange={(e) => handleImageChange(key, e.target.value)}
-                                                className="block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-                                            />
-                                            {value && (
-                                                <div className="mt-2">
-                                                    <p className="text-xs text-gray-500 mb-1">Preview:</p>
-                                                    <img src={value} alt={key} className="h-20 object-contain rounded border border-gray-200 bg-gray-50" />
+
+                                            <div className="space-y-3">
+                                                {/* URL Input */}
+                                                <div>
+                                                    <span className="mb-1 block text-xs text-gray-500">Image URL</span>
+                                                    <input
+                                                        type="text"
+                                                        value={value}
+                                                        onChange={(e) => handleImageChange(key, e.target.value)}
+                                                        placeholder="https://example.com/image.jpg"
+                                                        className="block w-full rounded-md border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                                                    />
                                                 </div>
-                                            )}
+
+                                                {/* File Upload */}
+                                                <div>
+                                                    <span className="mb-1 block text-xs text-gray-500">Or Upload from PC</span>
+                                                    <input
+                                                        type="file"
+                                                        accept="image/*"
+                                                        onChange={(e) => {
+                                                            const file = e.target.files?.[0];
+                                                            if (file) {
+                                                                // Check file size (limit to 500KB to prevent localStorage quota exceeded)
+                                                                if (file.size > 500 * 1024) {
+                                                                    alert('File size too large! Please upload an image smaller than 500KB to save in local storage.');
+                                                                    return;
+                                                                }
+
+                                                                const reader = new FileReader();
+                                                                reader.onloadend = () => {
+                                                                    handleImageChange(key, reader.result as string);
+                                                                };
+                                                                reader.readAsDataURL(file);
+                                                            }
+                                                        }}
+                                                        className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+                                                    />
+                                                </div>
+
+                                                {/* Preview */}
+                                                {value && (
+                                                    <div className="mt-2">
+                                                        <p className="text-xs text-gray-500 mb-1">Preview:</p>
+                                                        <img src={value} alt={key} className="h-32 object-contain rounded border border-gray-200 bg-gray-50" />
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                     ))}
-                                    <div className="rounded-md bg-yellow-50 p-4">
+                                    <div className="rounded-md bg-blue-50 p-4 mt-6">
                                         <div className="flex">
                                             <div className="flex-shrink-0">
-                                                <svg className="h-5 w-5 text-yellow-400" viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fillRule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                                                <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                                                 </svg>
                                             </div>
                                             <div className="ml-3">
-                                                <h3 className="text-sm font-medium text-yellow-800">Image Upload Note</h3>
-                                                <div className="mt-2 text-sm text-yellow-700">
+                                                <h3 className="text-sm font-medium text-blue-800">Image Upload Info</h3>
+                                                <div className="mt-2 text-sm text-blue-700">
                                                     <p>
-                                                        Currently, this admin panel only supports image URLs. To change images, please upload your image to a hosting service (like Imgur, AWS S3, or Vercel Blob) and paste the URL here.
+                                                        You can enter an image URL or upload a file from your PC.
+                                                        Uploaded files are saved locally in your browser.
+                                                        <strong>Note:</strong> Large files may exceed storage limits (max 500KB recommended).
                                                     </p>
                                                 </div>
                                             </div>

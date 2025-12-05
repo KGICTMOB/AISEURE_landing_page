@@ -5,6 +5,7 @@ const ContactForm = () => {
     const { content } = useContent();
     const {
         nameLabel, companyLabel, emailLabel, phoneLabel, messageLabel,
+        privacyTitle, privacyContent, privacyAgreeLabel, privacyDisagreeLabel,
         submitButtonText, submittingText, successTitle, successDesc, newInquiryButtonText, errorText
     } = content.sections.contactForm;
 
@@ -13,7 +14,8 @@ const ContactForm = () => {
         email: '',
         phone: '',
         company: '',
-        message: ''
+        message: '',
+        privacyAgreement: '' // 'agree' or 'disagree'
     });
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
 
@@ -22,8 +24,18 @@ const ContactForm = () => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const handlePrivacyChange = (value: string) => {
+        setFormData(prev => ({ ...prev, privacyAgreement: value }));
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!formData.privacyAgreement) {
+            alert('개인정보 수집 및 이용에 동의 여부를 체크해주세요.');
+            return;
+        }
+
         setStatus('submitting');
 
         const scriptUrl = 'https://script.google.com/macros/s/AKfycbwOD2DLvJehRQKytQJbxZfRDPa1kP8QBDFqoqG-pI9eb8pckzRSanh9clQjSBHnudgc6w/exec';
@@ -31,7 +43,12 @@ const ContactForm = () => {
         try {
             const formDataObj = new FormData();
             Object.entries(formData).forEach(([key, value]) => {
-                formDataObj.append(key, value);
+                // Map privacyAgreement to human readable text
+                if (key === 'privacyAgreement') {
+                    formDataObj.append('privacyAgreement', value === 'agree' ? '동의함' : '동의하지 않음');
+                } else {
+                    formDataObj.append(key, value);
+                }
             });
 
             await fetch(scriptUrl, {
@@ -41,7 +58,7 @@ const ContactForm = () => {
             });
 
             setStatus('success');
-            setFormData({ name: '', email: '', phone: '', company: '', message: '' });
+            setFormData({ name: '', email: '', phone: '', company: '', message: '', privacyAgreement: '' });
         } catch (error) {
             console.error('Error submitting form:', error);
             setStatus('error');
@@ -69,7 +86,7 @@ const ContactForm = () => {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-4 p-6">
+        <form onSubmit={handleSubmit} className="space-y-6 p-6">
             <div className="grid gap-4 md:grid-cols-2">
                 <div>
                     <label htmlFor="name" className="mb-1 block text-sm font-medium text-gray-700">{nameLabel}</label>
@@ -134,6 +151,38 @@ const ContactForm = () => {
                     onChange={handleChange}
                     className="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 ></textarea>
+            </div>
+
+            {/* Privacy Policy Section */}
+            <div className="rounded-md border border-gray-200 bg-gray-50 p-4">
+                <h4 className="mb-2 text-sm font-bold text-gray-900">{privacyTitle}</h4>
+                <div className="mb-4 h-32 overflow-y-auto rounded border border-gray-300 bg-white p-3 text-xs text-gray-600 whitespace-pre-wrap">
+                    {privacyContent}
+                </div>
+                <div className="flex items-center gap-6">
+                    <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                            type="radio"
+                            name="privacyAgreement"
+                            value="agree"
+                            checked={formData.privacyAgreement === 'agree'}
+                            onChange={() => handlePrivacyChange('agree')}
+                            className="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                        />
+                        <span className="text-sm text-gray-700">{privacyAgreeLabel}</span>
+                    </label>
+                    <label className="flex items-center gap-2 cursor-pointer">
+                        <input
+                            type="radio"
+                            name="privacyAgreement"
+                            value="disagree"
+                            checked={formData.privacyAgreement === 'disagree'}
+                            onChange={() => handlePrivacyChange('disagree')}
+                            className="h-4 w-4 text-blue-600 focus:ring-blue-500"
+                        />
+                        <span className="text-sm text-gray-700">{privacyDisagreeLabel}</span>
+                    </label>
+                </div>
             </div>
 
             <div className="pt-2">
