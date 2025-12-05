@@ -61,6 +61,34 @@ const ContentManager = () => {
         }
     };
 
+    const sectionGroups = {
+        'Home Page': ['home'],
+        'AI Features': ['aiThreatHero', 'featuresGrid', 'methodologies', 'adaptiveLearning', 'patternRecognition', 'dataAnalysis', 'automatedResponse', 'predictiveAnalytics', 'falsePositiveReduction'],
+        'Services': ['iso27001', 'ismsp'],
+        'Global Components': ['header', 'footer', 'contactForm']
+    };
+
+    const getSectionLabel = (key: string) => {
+        const labels: { [key: string]: string } = {
+            home: 'Home Page',
+            header: 'Header / Navigation',
+            footer: 'Footer',
+            contactForm: 'Contact Form',
+            aiThreatHero: 'AI Threat Hero',
+            featuresGrid: 'Features Grid',
+            methodologies: 'Methodologies',
+            adaptiveLearning: 'Adaptive Learning',
+            patternRecognition: 'Pattern Recognition',
+            dataAnalysis: 'Data Analysis',
+            automatedResponse: 'Automated Response',
+            predictiveAnalytics: 'Predictive Analytics',
+            falsePositiveReduction: 'False Positive Reduction',
+            iso27001: 'ISO 27001',
+            ismsp: 'ISMS-P'
+        };
+        return labels[key] || key;
+    };
+
     return (
         <div>
             <div className="mb-6 flex items-center justify-between">
@@ -81,8 +109,8 @@ const ContentManager = () => {
                             key={tab}
                             onClick={() => setActiveTab(tab)}
                             className={`whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium capitalize ${activeTab === tab
-                                    ? 'border-blue-500 text-blue-600'
-                                    : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                                ? 'border-blue-500 text-blue-600'
+                                : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
                                 }`}
                         >
                             {tab} Settings
@@ -99,21 +127,28 @@ const ContentManager = () => {
                             <div className="border-b border-gray-200 p-4">
                                 <h3 className="font-semibold text-gray-700">Sections</h3>
                             </div>
-                            <ul className="divide-y divide-gray-100">
-                                {Object.keys(content.sections).map((key) => (
-                                    <li key={key}>
-                                        <button
-                                            onClick={() => setSelectedSection(key)}
-                                            className={`w-full px-4 py-3 text-left transition-colors ${selectedSection === key
-                                                ? 'bg-blue-50 text-blue-600 border-l-4 border-blue-600'
-                                                : 'text-gray-600 hover:bg-gray-50'
-                                                }`}
-                                        >
-                                            {key}
-                                        </button>
-                                    </li>
+                            <div className="p-2">
+                                {Object.entries(sectionGroups).map(([groupName, keys]) => (
+                                    <div key={groupName} className="mb-4">
+                                        <h4 className="mb-2 px-2 text-xs font-bold text-gray-500 uppercase tracking-wider">{groupName}</h4>
+                                        <ul className="space-y-1">
+                                            {keys.map((key) => (
+                                                <li key={key}>
+                                                    <button
+                                                        onClick={() => setSelectedSection(key)}
+                                                        className={`w-full rounded-md px-3 py-2 text-left text-sm transition-colors ${selectedSection === key
+                                                            ? 'bg-blue-50 text-blue-600 font-medium'
+                                                            : 'text-gray-600 hover:bg-gray-50'
+                                                            }`}
+                                                    >
+                                                        {getSectionLabel(key)}
+                                                    </button>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </div>
                                 ))}
-                            </ul>
+                            </div>
                         </div>
                     </div>
                 )}
@@ -123,7 +158,7 @@ const ContentManager = () => {
                     <div className="rounded-lg bg-white p-6 shadow-md">
                         <h3 className="mb-6 text-xl font-semibold text-gray-800 capitalize">
                             Editing: <span className="text-blue-600">
-                                {activeTab === 'content' ? selectedSection : activeTab}
+                                {activeTab === 'content' ? getSectionLabel(selectedSection) : activeTab}
                             </span>
                         </h3>
 

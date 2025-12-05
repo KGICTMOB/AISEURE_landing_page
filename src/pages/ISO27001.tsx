@@ -2,9 +2,19 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import ContactModal from '@/components/ContactModal';
+import { useContent } from '@/context/ContentContext';
 
 const ISO27001 = () => {
     const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+    const { content } = useContent();
+    const {
+        title, subtitle, overviewTitle, overviewText1, overviewText2,
+        principlesTitle, principle1Title, principle1Desc, principle2Title, principle2Desc, principle3Title, principle3Desc,
+        backgroundTitle, backgroundList,
+        necessityTitle, necessity1Title, necessity1List, necessity2Title, necessity2List,
+        effectsTitle, effect1Title, effect1Desc, effect2Title, effect2Desc, effect3Title, effect3Desc, effect4Title, effect4Desc, effect5Title, effect5Desc, effect6Title, effect6Desc,
+        consultingTitle, consultingStep1Title, consultingStep1Desc, consultingStep2Title, consultingStep2Desc, consultingStep3Title, consultingStep3Desc, consultingStep4Title, consultingStep4Desc
+    } = content.sections.iso27001;
 
     return (
         <div className="min-h-screen bg-gray-900">
@@ -33,9 +43,9 @@ const ISO27001 = () => {
                     >
                         <div className="text-6xl">🔒</div>
                         <div>
-                            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">ISO 27001 인증</h1>
+                            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">{title}</h1>
                             <p className="text-xl text-white/90 leading-relaxed">
-                                정보보안 경영시스템의 국제 표준 인증으로 조직의 정보자산을 체계적으로 보호합니다.
+                                {subtitle}
                             </p>
                         </div>
                     </motion.div>
@@ -52,34 +62,15 @@ const ISO27001 = () => {
                         transition={{ duration: 0.6 }}
                         className="mb-16"
                     >
-                        <h2 className="text-3xl font-bold text-white mb-6">ISO 27001이란?</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">{overviewTitle}</h2>
                         <div className="prose prose-invert max-w-none">
                             <p className="text-lg text-gray-300 leading-relaxed mb-4">
-                                ISO 27001은 조직이나 기업이 정보보안 경영시스템(Information Security Management System: ISMS)을
-                                수립하여 이행하고 감시 및 검토, 유지, 개선하기 위해 필요한 요구사항을 명시한 국제표준입니다.
+                                {overviewText1}
                             </p>
                             <p className="text-lg text-gray-300 leading-relaxed">
-                                국제표준화기구(ISO) 및 국제전기기술위원회(IEC)에서 제정한 정보보호 관리체계에 대한 국제표준으로서
-                                Plan-Do-Check-Action(PDCA) 모델을 채택하여 정보자산의 기밀성, 무결성, 가용성을 실현합니다.
+                                {overviewText2}
                             </p>
                         </div>
-
-                        {/* 
-                            ============================================
-                            이미지 삽입 위치 #1: PDCA 모델 다이어그램
-                            ============================================
-                            여기에 ISO 27001의 PDCA (Plan-Do-Check-Act) 사이클을 
-                            설명하는 다이어그램 이미지를 삽입하면 좋습니다.
-                            
-                            예시 코드:
-                            <div className="my-8">
-                                <img 
-                                    src="/path/to/pdca-diagram.png" 
-                                    alt="ISO 27001 PDCA Cycle" 
-                                    className="w-full max-w-3xl mx-auto rounded-lg shadow-xl"
-                                />
-                            </div>
-                        */}
                     </motion.div>
 
                     {/* 핵심 원칙 */}
@@ -89,7 +80,7 @@ const ISO27001 = () => {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="mb-16"
                     >
-                        <h2 className="text-3xl font-bold text-white mb-6">정보보안 3대 원칙</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">{principlesTitle}</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             <div className="bg-gradient-to-br from-blue-900/30 to-indigo-900/30 rounded-xl p-6 border border-blue-500/30">
                                 <div className="flex items-start gap-4">
@@ -97,9 +88,9 @@ const ISO27001 = () => {
                                         🔐
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-bold text-white mb-2">기밀성 (Confidentiality)</h3>
+                                        <h3 className="text-xl font-bold text-white mb-2">{principle1Title}</h3>
                                         <p className="text-gray-300">
-                                            접근이 인가된 사람만이 정보에 접근 가능함을 보장
+                                            {principle1Desc}
                                         </p>
                                     </div>
                                 </div>
@@ -111,9 +102,9 @@ const ISO27001 = () => {
                                         ✓
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-bold text-white mb-2">무결성 (Integrity)</h3>
+                                        <h3 className="text-xl font-bold text-white mb-2">{principle2Title}</h3>
                                         <p className="text-gray-300">
-                                            정보 및 처리 방법의 정확성 및 완전성을 보호
+                                            {principle2Desc}
                                         </p>
                                     </div>
                                 </div>
@@ -125,9 +116,9 @@ const ISO27001 = () => {
                                         ⚡
                                     </div>
                                     <div>
-                                        <h3 className="text-xl font-bold text-white mb-2">가용성 (Availability)</h3>
+                                        <h3 className="text-xl font-bold text-white mb-2">{principle3Title}</h3>
                                         <p className="text-gray-300">
-                                            인가된 사용자가 필요시 정보 및 관련 자산에 접근하는 것을 보장
+                                            {principle3Desc}
                                         </p>
                                     </div>
                                 </div>
@@ -142,25 +133,15 @@ const ISO27001 = () => {
                         transition={{ duration: 0.6, delay: 0.4 }}
                         className="mb-16"
                     >
-                        <h2 className="text-3xl font-bold text-white mb-6">도입 배경</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">{backgroundTitle}</h2>
                         <div className="bg-gray-800 rounded-xl p-8 border border-gray-700">
                             <ul className="space-y-4">
-                                <li className="flex items-start gap-3">
-                                    <span className="text-blue-400 mt-1">▸</span>
-                                    <span className="text-gray-300">기업에게 돌이킬 수 없는 경제적 손실과 기업 이미지 손상을 초래하는 정보보안사고 확산</span>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <span className="text-blue-400 mt-1">▸</span>
-                                    <span className="text-gray-300">체계적인 정보 관리의 필요성 증대</span>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <span className="text-blue-400 mt-1">▸</span>
-                                    <span className="text-gray-300">정보자산과 고객정보의 보호 및 정보의 이용가치 제고를 통한 기업경쟁력 향상</span>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <span className="text-blue-400 mt-1">▸</span>
-                                    <span className="text-gray-300">시스템 표준을 통한 정보의 체계적이고 지속적인 관리</span>
-                                </li>
+                                {backgroundList.split('|').map((item: string, index: number) => (
+                                    <li key={index} className="flex items-start gap-3">
+                                        <span className="text-blue-400 mt-1">▸</span>
+                                        <span className="text-gray-300">{item}</span>
+                                    </li>
+                                ))}
                             </ul>
                         </div>
                     </motion.div>
@@ -172,31 +153,29 @@ const ISO27001 = () => {
                         transition={{ duration: 0.6, delay: 0.6 }}
                         className="mb-16"
                     >
-                        <h2 className="text-3xl font-bold text-white mb-6">도입 필요성</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">{necessityTitle}</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
                                 <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                                     <span className="text-red-400">⚠️</span>
-                                    보안 위협 증가
+                                    {necessity1Title}
                                 </h3>
                                 <ul className="space-y-2 text-gray-300">
-                                    <li>• 인터넷 확산으로 인한 새로운 보안위협 증가</li>
-                                    <li>• 내부 정보 유출자의 증가</li>
-                                    <li>• 해킹에 의한 침해 사고의 증가</li>
-                                    <li>• 첨단 기술 및 중요 정보 유출</li>
+                                    {necessity1List.split('|').map((item: string, index: number) => (
+                                        <li key={index}>• {item}</li>
+                                    ))}
                                 </ul>
                             </div>
 
                             <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
                                 <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                                     <span className="text-yellow-400">📊</span>
-                                    관리 체계 부재
+                                    {necessity2Title}
                                 </h3>
                                 <ul className="space-y-2 text-gray-300">
-                                    <li>• 약 3/4의 조직이 보안문제를 처리할 수 있는 시스템 부재</li>
-                                    <li>• 30% 이상의 조직이 정보의 중요성을 인식하지 못함</li>
-                                    <li>• 관련 법규 및 규정에 대한 준수 필요</li>
-                                    <li>• 체계적이고 종합적인 정보보호 관리 필요</li>
+                                    {necessity2List.split('|').map((item: string, index: number) => (
+                                        <li key={index}>• {item}</li>
+                                    ))}
                                 </ul>
                             </div>
                         </div>
@@ -209,15 +188,15 @@ const ISO27001 = () => {
                         transition={{ duration: 0.6, delay: 0.8 }}
                         className="mb-16"
                     >
-                        <h2 className="text-3xl font-bold text-white mb-6">도입 효과</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">{effectsTitle}</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {[
-                                { icon: '🎯', title: '위험 관리', desc: '조직의 위험을 올바르게 파악, 심사 및 관리' },
-                                { icon: '🏆', title: '경쟁력 향상', desc: '고객 정보 보호를 통한 신뢰성 및 경쟁력 제고' },
-                                { icon: '🛡️', title: '자산 보호', desc: '이해관계자와 고객 데이터 등 조직 자산 보호' },
-                                { icon: '📈', title: '지속적 개선', desc: '정기적인 심사를 통한 성과 모니터링' },
-                                { icon: '💼', title: '비즈니스 연속성', desc: '정보시스템 보호 및 비즈니스 연속성 보장' },
-                                { icon: '🌐', title: '해외 진출', desc: '글로벌 시장 진출 시 경쟁 우위 확보' },
+                                { icon: '🎯', title: effect1Title, desc: effect1Desc },
+                                { icon: '🏆', title: effect2Title, desc: effect2Desc },
+                                { icon: '🛡️', title: effect3Title, desc: effect3Desc },
+                                { icon: '📈', title: effect4Title, desc: effect4Desc },
+                                { icon: '💼', title: effect5Title, desc: effect5Desc },
+                                { icon: '🌐', title: effect6Title, desc: effect6Desc },
                             ].map((item, index) => (
                                 <div key={index} className="bg-gradient-to-br from-blue-900/20 to-indigo-900/20 rounded-xl p-6 border border-blue-500/20 hover:border-blue-500/50 transition-all">
                                     <div className="text-4xl mb-3">{item.icon}</div>
@@ -234,7 +213,7 @@ const ISO27001 = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 1.0 }}
                     >
-                        <h2 className="text-3xl font-bold text-white mb-6">AISEURE ISO 27001 컨설팅 서비스</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">{consultingTitle}</h2>
                         <div className="bg-gradient-to-br from-blue-900/30 to-indigo-900/30 rounded-xl p-8 border border-blue-500/30">
                             <div className="space-y-6">
                                 <div className="flex items-start gap-4">
@@ -242,9 +221,9 @@ const ISO27001 = () => {
                                         1
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-bold text-white mb-2">Gap Analysis (갭 분석)</h4>
+                                        <h4 className="text-xl font-bold text-white mb-2">{consultingStep1Title}</h4>
                                         <p className="text-gray-300">
-                                            현재 조직의 정보보안 수준을 ISO 27001 기준과 비교하여 개선이 필요한 영역을 식별합니다.
+                                            {consultingStep1Desc}
                                         </p>
                                     </div>
                                 </div>
@@ -254,9 +233,9 @@ const ISO27001 = () => {
                                         2
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-bold text-white mb-2">Policy Development (정책 수립)</h4>
+                                        <h4 className="text-xl font-bold text-white mb-2">{consultingStep2Title}</h4>
                                         <p className="text-gray-300">
-                                            조직에 맞는 정보보안 정책, 절차, 지침을 개발하고 문서화합니다.
+                                            {consultingStep2Desc}
                                         </p>
                                     </div>
                                 </div>
@@ -266,9 +245,9 @@ const ISO27001 = () => {
                                         3
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-bold text-white mb-2">Internal Audit Support (내부 감사 지원)</h4>
+                                        <h4 className="text-xl font-bold text-white mb-2">{consultingStep3Title}</h4>
                                         <p className="text-gray-300">
-                                            인증 심사 전 내부 감사를 실시하여 준비 상태를 점검하고 개선사항을 도출합니다.
+                                            {consultingStep3Desc}
                                         </p>
                                     </div>
                                 </div>
@@ -278,9 +257,9 @@ const ISO27001 = () => {
                                         4
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-bold text-white mb-2">Certification Support (인증 지원)</h4>
+                                        <h4 className="text-xl font-bold text-white mb-2">{consultingStep4Title}</h4>
                                         <p className="text-gray-300">
-                                            인증 심사 준비부터 인증 획득까지 전 과정을 지원하고 사후 관리를 도와드립니다.
+                                            {consultingStep4Desc}
                                         </p>
                                     </div>
                                 </div>

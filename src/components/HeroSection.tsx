@@ -1,7 +1,10 @@
 import { motion } from 'framer-motion';
 import heroPoster from '@/assets/hero-poster-ultra.png';
+import { useContent } from '@/context/ContentContext';
 
 const HeroSection = () => {
+    const { content } = useContent();
+    const { heroTitle, heroSubtitle, heroButtonText } = content.sections.home;
     return (
         <section className="relative h-screen w-full overflow-hidden bg-black">
             {/* Animated Background Image (Fallback/Poster) */}
@@ -39,13 +42,11 @@ const HeroSection = () => {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="max-w-4xl"
                 >
-                    <h1 className="mb-6 text-5xl font-bold leading-tight md:text-7xl">
-                        AI Security <br />
-                        <span className="text-blue-500">Full-Stack Master Plan</span>
+                    <h1 className="mb-6 text-5xl font-bold leading-tight md:text-7xl whitespace-pre-line">
+                        {heroTitle}
                     </h1>
-                    <p className="mb-8 text-xl text-gray-300 md:text-2xl leading-relaxed">
-                        AI 기반의 보안 솔루션으로 귀사의 미래를 보호하십시오.<br />
-                        <span className="font-semibold text-white">ISO 27001, ISMS-P</span> 및 <span className="font-semibold text-white">IT Audit</span> 컨설팅.
+                    <p className="mb-8 text-xl text-gray-300 md:text-2xl leading-relaxed whitespace-pre-line">
+                        {heroSubtitle}
                     </p>
                     <a
                         href="https://blog.naver.com/kjhkjh10114"
@@ -53,7 +54,7 @@ const HeroSection = () => {
                         rel="noopener noreferrer"
                         className="inline-block rounded-full bg-blue-600 px-8 py-4 text-lg font-semibold text-white transition-colors hover:bg-blue-700"
                     >
-                        기업 소개
+                        {heroButtonText}
                     </a>
                 </motion.div>
             </div>

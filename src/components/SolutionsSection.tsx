@@ -1,28 +1,38 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
-const solutions = [
-    {
-        title: 'AI Threat Detection',
-        description: 'AI 핵심 6개의 기능을 제공하며 (적응형 학습, 패턴 인식, 데이터 분석, 자동화된 대응, 예측 분석, 오탐률 감소)',
-        icon: '🛡️',
-        link: '/ai-threat-detection',
-    },
-    {
-        title: 'Security Architecture',
-        description: '기업 환경에 최적화된 견고하고 확장 가능한 보안 인프라 설계.',
-        icon: '🏗️',
-        link: null,
-    },
-    {
-        title: 'Full-Stack Implementation',
-        description: '프론트엔드 인터페이스부터 백엔드 데이터베이스까지 엔드투엔드 보안 통합.',
-        icon: '💻',
-        link: null,
-    },
-];
+import { useContent } from '@/context/ContentContext';
 
 const SolutionsSection = () => {
+    const { content } = useContent();
+    const {
+        solutionsTitle,
+        solutionsSubtitle,
+        solution1Title, solution1Desc,
+        solution2Title, solution2Desc,
+        solution3Title, solution3Desc
+    } = content.sections.home;
+
+    const solutions = [
+        {
+            title: solution1Title,
+            description: solution1Desc,
+            icon: '🛡️',
+            link: '/ai-threat-detection',
+        },
+        {
+            title: solution2Title,
+            description: solution2Desc,
+            icon: '🏗️',
+            link: null,
+        },
+        {
+            title: solution3Title,
+            description: solution3Desc,
+            icon: '💻',
+            link: null,
+        },
+    ];
     return (
         <section className="bg-black py-24 text-white">
             <div className="container mx-auto px-6 md:px-12">
@@ -33,9 +43,9 @@ const SolutionsSection = () => {
                     transition={{ duration: 0.6 }}
                     className="mb-16 text-center"
                 >
-                    <h2 className="mb-4 text-4xl font-bold md:text-5xl">Our Solutions</h2>
+                    <h2 className="mb-4 text-4xl font-bold md:text-5xl">{solutionsTitle}</h2>
                     <p className="mx-auto max-w-2xl text-lg text-gray-400">
-                        Comprehensive AI-driven security strategies to safeguard your digital assets.
+                        {solutionsSubtitle}
                     </p>
                 </motion.div>
 

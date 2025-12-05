@@ -1,6 +1,13 @@
 import { useState } from 'react';
+import { useContent } from '@/context/ContentContext';
 
 const ContactForm = () => {
+    const { content } = useContent();
+    const {
+        nameLabel, companyLabel, emailLabel, phoneLabel, messageLabel,
+        submitButtonText, submittingText, successTitle, successDesc, newInquiryButtonText, errorText
+    } = content.sections.contactForm;
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -49,13 +56,13 @@ const ContactForm = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                 </div>
-                <h3 className="mb-2 text-xl font-bold text-gray-900">문의가 접수되었습니다!</h3>
-                <p className="text-gray-600">빠른 시일 내에 답변 드리겠습니다.</p>
+                <h3 className="mb-2 text-xl font-bold text-gray-900">{successTitle}</h3>
+                <p className="text-gray-600">{successDesc}</p>
                 <button
                     onClick={() => setStatus('idle')}
                     className="mt-6 text-blue-600 hover:text-blue-700 font-medium"
                 >
-                    새로운 문의 작성하기
+                    {newInquiryButtonText}
                 </button>
             </div>
         );
@@ -65,7 +72,7 @@ const ContactForm = () => {
         <form onSubmit={handleSubmit} className="space-y-4 p-6">
             <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                    <label htmlFor="name" className="mb-1 block text-sm font-medium text-gray-700">이름 *</label>
+                    <label htmlFor="name" className="mb-1 block text-sm font-medium text-gray-700">{nameLabel}</label>
                     <input
                         type="text"
                         id="name"
@@ -73,25 +80,25 @@ const ContactForm = () => {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        className="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                     />
                 </div>
                 <div>
-                    <label htmlFor="company" className="mb-1 block text-sm font-medium text-gray-700">회사명</label>
+                    <label htmlFor="company" className="mb-1 block text-sm font-medium text-gray-700">{companyLabel}</label>
                     <input
                         type="text"
                         id="company"
                         name="company"
                         value={formData.company}
                         onChange={handleChange}
-                        className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        className="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                     />
                 </div>
             </div>
 
             <div className="grid gap-4 md:grid-cols-2">
                 <div>
-                    <label htmlFor="email" className="mb-1 block text-sm font-medium text-gray-700">이메일 *</label>
+                    <label htmlFor="email" className="mb-1 block text-sm font-medium text-gray-700">{emailLabel}</label>
                     <input
                         type="email"
                         id="email"
@@ -99,11 +106,11 @@ const ContactForm = () => {
                         required
                         value={formData.email}
                         onChange={handleChange}
-                        className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        className="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                     />
                 </div>
                 <div>
-                    <label htmlFor="phone" className="mb-1 block text-sm font-medium text-gray-700">연락처 *</label>
+                    <label htmlFor="phone" className="mb-1 block text-sm font-medium text-gray-700">{phoneLabel}</label>
                     <input
                         type="tel"
                         id="phone"
@@ -111,13 +118,13 @@ const ContactForm = () => {
                         required
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                        className="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                     />
                 </div>
             </div>
 
             <div>
-                <label htmlFor="message" className="mb-1 block text-sm font-medium text-gray-700">문의 내용 *</label>
+                <label htmlFor="message" className="mb-1 block text-sm font-medium text-gray-700">{messageLabel}</label>
                 <textarea
                     id="message"
                     name="message"
@@ -135,13 +142,13 @@ const ContactForm = () => {
                     disabled={status === 'submitting'}
                     className="w-full rounded-md bg-blue-600 px-4 py-3 font-semibold text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-400"
                 >
-                    {status === 'submitting' ? '전송 중...' : '문의하기'}
+                    {status === 'submitting' ? submittingText : submitButtonText}
                 </button>
             </div>
 
             {status === 'error' && (
                 <p className="text-center text-sm text-red-600">
-                    전송 중 오류가 발생했습니다. 잠시 후 다시 시도해주세요.
+                    {errorText}
                 </p>
             )}
         </form>

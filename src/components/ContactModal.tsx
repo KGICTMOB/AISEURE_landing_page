@@ -13,7 +13,6 @@ const ContactModal = ({ isOpen, onClose }: ContactModalProps) => {
     return (
         <div
             className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm"
-            onClick={onClose}
         >
             <div
                 className="relative w-full max-w-4xl max-h-[90vh] mx-4 bg-white rounded-2xl shadow-2xl border border-gray-700 overflow-hidden flex flex-col"

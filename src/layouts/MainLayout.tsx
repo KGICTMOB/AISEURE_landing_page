@@ -2,25 +2,32 @@ import { useState } from 'react';
 import { Outlet, Link } from 'react-router-dom';
 import logo from '@/assets/logo.png';
 import ContactModal from '@/components/ContactModal';
+import { useContent } from '@/context/ContentContext';
 
 const Header = () => {
     const [isAIFeaturesOpen, setIsAIFeaturesOpen] = useState(false);
     const [isServicesOpen, setIsServicesOpen] = useState(false);
     const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+    const { content } = useContent();
+    const {
+        aiFeaturesLabel, servicesLabel, aboutLabel, contactButtonText,
+        aiFeature1, aiFeature2, aiFeature3, aiFeature4, aiFeature5, aiFeature6,
+        service1, service2, service3
+    } = content.sections.header;
 
     const aiFeatures = [
-        { id: 'adaptive-learning', title: '적응형 학습', icon: '🧠' },
-        { id: 'pattern-recognition', title: '고급 패턴 인식', icon: '🔍' },
-        { id: 'data-analysis', title: '대규모 데이터 분석', icon: '📊' },
-        { id: 'automated-response', title: '자동화된 대응', icon: '⚡' },
-        { id: 'predictive-analytics', title: '예측 분석', icon: '🔮' },
-        { id: 'false-positive-reduction', title: '오탐률 감소', icon: '✓' },
+        { id: 'adaptive-learning', title: aiFeature1, icon: '🧠' },
+        { id: 'pattern-recognition', title: aiFeature2, icon: '🔍' },
+        { id: 'data-analysis', title: aiFeature3, icon: '📊' },
+        { id: 'automated-response', title: aiFeature4, icon: '⚡' },
+        { id: 'predictive-analytics', title: aiFeature5, icon: '🔮' },
+        { id: 'false-positive-reduction', title: aiFeature6, icon: '✓' },
     ];
 
     const services = [
-        { id: 'iso27001', title: 'ISO 27001', path: '/consulting/iso27001' },
-        { id: 'isms-p', title: 'ISMS / ISMS-P', path: '/consulting/isms-p' },
-        { id: 'it-audit', title: 'IT Internal Audit', path: '#' },
+        { id: 'iso27001', title: service1, path: '/consulting/iso27001' },
+        { id: 'isms-p', title: service2, path: '/consulting/isms-p' },
+        { id: 'it-audit', title: service3, path: '#' },
     ];
 
     return (
@@ -40,9 +47,9 @@ const Header = () => {
                             onMouseLeave={() => setIsAIFeaturesOpen(false)}
                         >
                             <div className="flex items-center gap-1 hover:text-cyan-400 transition-colors">
-                                AI 기능
+                                {aiFeaturesLabel}
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7 7" />
                                 </svg>
                             </div>
 
@@ -70,9 +77,9 @@ const Header = () => {
                             onMouseLeave={() => setIsServicesOpen(false)}
                         >
                             <div className="flex items-center gap-1 hover:text-cyan-400 transition-colors">
-                                서비스
+                                {servicesLabel}
                                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7 7" />
                                 </svg>
                             </div>
 
@@ -93,14 +100,14 @@ const Header = () => {
                         </li>
 
                         <li className="cursor-pointer hover:text-cyan-400 transition-colors">
-                            <a href="https://blog.naver.com/kjhkjh10114" target="_blank" rel="noopener noreferrer">회사 소개</a>
+                            <a href="https://blog.naver.com/kjhkjh10114" target="_blank" rel="noopener noreferrer">{aboutLabel}</a>
                         </li>
                         <li>
                             <button
                                 onClick={() => setIsContactModalOpen(true)}
                                 className="px-6 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full font-semibold hover:shadow-lg hover:shadow-cyan-500/50 transition-all"
                             >
-                                상담 문의
+                                {contactButtonText}
                             </button>
                         </li>
                     </ul>
@@ -113,59 +120,65 @@ const Header = () => {
 };
 
 const Footer = () => {
+    const { content } = useContent();
+    const {
+        companyName, companyDesc, aiFeaturesLabel, servicesLabel, companyLabel,
+        aboutLabel, careersLabel, contactLabel, copyright,
+        aiFeature1, aiFeature2, aiFeature3, aiFeature4, aiFeature5, aiFeature6,
+        service1, service2, service3
+    } = { ...content.sections.footer, ...content.sections.header }; // Merge header content for consistent labels if needed, or just use footer content
+
     return (
         <footer className="bg-gray-900 py-12 text-white">
             <div className="container mx-auto px-6 md:px-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* Company Info */}
                     <div className="md:col-span-1">
-                        <h3 className="mb-4 text-xl font-bold">AI Security</h3>
-                        <p className="text-gray-400">Advanced Security Solutions for the AI Era.</p>
+                        <h3 className="mb-4 text-xl font-bold">{companyName}</h3>
+                        <p className="text-gray-400">{companyDesc}</p>
                     </div>
 
                     {/* AI Features */}
                     <div>
-                        <h4 className="mb-4 font-semibold text-cyan-400">AI 기능</h4>
+                        <h4 className="mb-4 font-semibold text-cyan-400">{aiFeaturesLabel}</h4>
                         <ul className="space-y-2 text-gray-400">
-                            <li><Link to="/ai-threat-detection/adaptive-learning" className="hover:text-cyan-400 transition-colors">적응형 학습</Link></li>
-                            <li><Link to="/ai-threat-detection/pattern-recognition" className="hover:text-cyan-400 transition-colors">고급 패턴 인식</Link></li>
-                            <li><Link to="/ai-threat-detection/data-analysis" className="hover:text-cyan-400 transition-colors">대규모 데이터 분석</Link></li>
-                            <li><Link to="/ai-threat-detection/automated-response" className="hover:text-cyan-400 transition-colors">자동화된 대응</Link></li>
-                            <li><Link to="/ai-threat-detection/predictive-analytics" className="hover:text-cyan-400 transition-colors">예측 분석</Link></li>
-                            <li><Link to="/ai-threat-detection/false-positive-reduction" className="hover:text-cyan-400 transition-colors">오탐률 감소</Link></li>
+                            <li><Link to="/ai-threat-detection/adaptive-learning" className="hover:text-cyan-400 transition-colors">{aiFeature1}</Link></li>
+                            <li><Link to="/ai-threat-detection/pattern-recognition" className="hover:text-cyan-400 transition-colors">{aiFeature2}</Link></li>
+                            <li><Link to="/ai-threat-detection/data-analysis" className="hover:text-cyan-400 transition-colors">{aiFeature3}</Link></li>
+                            <li><Link to="/ai-threat-detection/automated-response" className="hover:text-cyan-400 transition-colors">{aiFeature4}</Link></li>
+                            <li><Link to="/ai-threat-detection/predictive-analytics" className="hover:text-cyan-400 transition-colors">{aiFeature5}</Link></li>
+                            <li><Link to="/ai-threat-detection/false-positive-reduction" className="hover:text-cyan-400 transition-colors">{aiFeature6}</Link></li>
                         </ul>
                     </div>
 
                     {/* Services */}
                     <div>
-                        <h4 className="mb-4 font-semibold text-cyan-400">Services</h4>
+                        <h4 className="mb-4 font-semibold text-cyan-400">{servicesLabel}</h4>
                         <ul className="space-y-2 text-gray-400">
-                            <li><Link to="/consulting/iso27001" className="hover:text-cyan-400 transition-colors">ISO 27001</Link></li>
-                            <li><Link to="/consulting/isms-p" className="hover:text-cyan-400 transition-colors">ISMS-P</Link></li>
-                            <li className="hover:text-cyan-400 transition-colors cursor-pointer">IT Audit</li>
+                            <li><Link to="/consulting/iso27001" className="hover:text-cyan-400 transition-colors">{service1}</Link></li>
+                            <li><Link to="/consulting/isms-p" className="hover:text-cyan-400 transition-colors">{service2}</Link></li>
+                            <li className="hover:text-cyan-400 transition-colors cursor-pointer">{service3}</li>
                         </ul>
                     </div>
 
                     {/* Company */}
                     <div>
-                        <h4 className="mb-4 font-semibold text-cyan-400">Company</h4>
+                        <h4 className="mb-4 font-semibold text-cyan-400">{companyLabel}</h4>
                         <ul className="space-y-2 text-gray-400">
-                            <li><a href="https://blog.naver.com/kjhkjh10114" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition-colors">About</a></li>
-                            <li className="hover:text-cyan-400 transition-colors cursor-pointer">Careers</li>
-                            <li className="hover:text-cyan-400 transition-colors cursor-pointer">Contact</li>
+                            <li><a href="https://blog.naver.com/kjhkjh10114" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-400 transition-colors">{aboutLabel}</a></li>
+                            <li className="hover:text-cyan-400 transition-colors cursor-pointer">{careersLabel}</li>
+                            <li className="hover:text-cyan-400 transition-colors cursor-pointer">{contactLabel}</li>
                         </ul>
                     </div>
                 </div>
 
                 <div className="mt-12 border-t border-gray-800 pt-8 text-center text-gray-500">
-                    &copy; 2025 AI Security. All rights reserved.
+                    {copyright}
                 </div>
             </div>
         </footer>
     );
 };
-
-import { useContent } from '@/context/ContentContext';
 
 const MainLayout = () => {
     const { content } = useContent();

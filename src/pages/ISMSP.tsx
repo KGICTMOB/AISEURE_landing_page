@@ -2,9 +2,19 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import ContactModal from '@/components/ContactModal';
+import { useContent } from '@/context/ContentContext';
 
 const ISMSP = () => {
     const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+    const { content } = useContent();
+    const {
+        title, subtitle, overviewTitle, overviewText1, overviewText2,
+        legalBasisTitle, legalBasis1Title, legalBasis1List, legalBasis2Title, legalBasis2List,
+        criteriaTitle, criteria1Count, criteria1Title, criteria1List, criteria2Count, criteria2Title, criteria2List, criteria3Count, criteria3Title, criteria3List,
+        targetTitle, target1Title, target1List, target2Title, target2List,
+        effectsTitle, effect1Title, effect1Desc, effect2Title, effect2Desc, effect3Title, effect3Desc, effect4Title, effect4Desc, effect5Title, effect5Desc, effect6Title, effect6Desc,
+        consultingTitle, consultingStep1Title, consultingStep1Desc, consultingStep2Title, consultingStep2Desc, consultingStep3Title, consultingStep3Desc, consultingStep4Title, consultingStep4Desc
+    } = content.sections.ismsp;
 
     return (
         <div className="min-h-screen bg-gray-900">
@@ -33,9 +43,9 @@ const ISMSP = () => {
                     >
                         <div className="text-6xl">🔐</div>
                         <div>
-                            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">ISMS-P 인증</h1>
+                            <h1 className="text-4xl md:text-6xl font-bold text-white mb-4">{title}</h1>
                             <p className="text-xl text-white/90 leading-relaxed">
-                                정보보호 및 개인정보보호 관리체계 인증으로 통합 컴플라이언스를 관리합니다.
+                                {subtitle}
                             </p>
                         </div>
                     </motion.div>
@@ -52,16 +62,13 @@ const ISMSP = () => {
                         transition={{ duration: 0.6 }}
                         className="mb-16"
                     >
-                        <h2 className="text-3xl font-bold text-white mb-6">ISMS-P란?</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">{overviewTitle}</h2>
                         <div className="prose prose-invert max-w-none">
                             <p className="text-lg text-gray-300 leading-relaxed mb-4">
-                                ISMS-P(Information Security Management System - Personal Information)는
-                                정보보호 및 개인정보보호를 위한 일련의 조치와 활동이 인증기준에 적합함을
-                                한국인터넷진흥원(KISA) 또는 인증기관이 증명하는 제도입니다.
+                                {overviewText1}
                             </p>
                             <p className="text-lg text-gray-300 leading-relaxed">
-                                기존의 정보보호 관리체계(ISMS)와 개인정보보호 관리체계(PIMS)를 통합한 인증으로,
-                                조직의 정보보호와 개인정보보호를 통합적으로 관리할 수 있습니다.
+                                {overviewText2}
                             </p>
                         </div>
                     </motion.div>
@@ -73,23 +80,23 @@ const ISMSP = () => {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="mb-16"
                     >
-                        <h2 className="text-3xl font-bold text-white mb-6">법적 근거</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">{legalBasisTitle}</h2>
                         <div className="bg-gray-800 rounded-xl p-8 border border-gray-700">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <h3 className="text-xl font-bold text-purple-400 mb-3">정보통신망법</h3>
+                                    <h3 className="text-xl font-bold text-purple-400 mb-3">{legalBasis1Title}</h3>
                                     <ul className="space-y-2 text-gray-300 text-sm">
-                                        <li>• 제47조 (관리체계 인증)</li>
-                                        <li>• 시행령 제47조~제54조</li>
-                                        <li>• 시행규칙 제3조</li>
+                                        {legalBasis1List.split('|').map((item: string, index: number) => (
+                                            <li key={index}>• {item}</li>
+                                        ))}
                                     </ul>
                                 </div>
                                 <div>
-                                    <h3 className="text-xl font-bold text-pink-400 mb-3">개인정보보호법</h3>
+                                    <h3 className="text-xl font-bold text-pink-400 mb-3">{legalBasis2Title}</h3>
                                     <ul className="space-y-2 text-gray-300 text-sm">
-                                        <li>• 제32조의2 (인증)</li>
-                                        <li>• 시행령 제34조의2~제34조의8</li>
-                                        <li>• 관리체계 인증 등에 관한 고시</li>
+                                        {legalBasis2List.split('|').map((item: string, index: number) => (
+                                            <li key={index}>• {item}</li>
+                                        ))}
                                     </ul>
                                 </div>
                             </div>
@@ -103,20 +110,19 @@ const ISMSP = () => {
                         transition={{ duration: 0.6, delay: 0.4 }}
                         className="mb-16"
                     >
-                        <h2 className="text-3xl font-bold text-white mb-6">인증 기준 (총 101개 항목)</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">{criteriaTitle}</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {/* 관리체계 수립 및 운영 */}
                             <div className="bg-gradient-to-br from-blue-900/30 to-cyan-900/30 rounded-xl p-6 border border-blue-500/30">
                                 <div className="text-center mb-4">
                                     <div className="text-5xl mb-2">📋</div>
-                                    <h3 className="text-2xl font-bold text-white mb-1">16개</h3>
-                                    <p className="text-blue-300 font-semibold">관리체계 수립 및 운영</p>
+                                    <h3 className="text-2xl font-bold text-white mb-1">{criteria1Count}</h3>
+                                    <p className="text-blue-300 font-semibold">{criteria1Title}</p>
                                 </div>
                                 <ul className="space-y-2 text-gray-300 text-sm">
-                                    <li>• 관리체계 기반 마련</li>
-                                    <li>• 위험관리</li>
-                                    <li>• 관리체계 운영</li>
-                                    <li>• 관리체계 점검 및 개선</li>
+                                    {criteria1List.split('|').map((item: string, index: number) => (
+                                        <li key={index}>• {item}</li>
+                                    ))}
                                 </ul>
                             </div>
 
@@ -124,18 +130,13 @@ const ISMSP = () => {
                             <div className="bg-gradient-to-br from-green-900/30 to-emerald-900/30 rounded-xl p-6 border border-green-500/30">
                                 <div className="text-center mb-4">
                                     <div className="text-5xl mb-2">🛡️</div>
-                                    <h3 className="text-2xl font-bold text-white mb-1">64개</h3>
-                                    <p className="text-green-300 font-semibold">보호대책 요구사항</p>
+                                    <h3 className="text-2xl font-bold text-white mb-1">{criteria2Count}</h3>
+                                    <p className="text-green-300 font-semibold">{criteria2Title}</p>
                                 </div>
                                 <ul className="space-y-2 text-gray-300 text-sm">
-                                    <li>• 정책, 조직, 자산관리</li>
-                                    <li>• 인적보안 / 외부자 보안</li>
-                                    <li>• 물리보안</li>
-                                    <li>• 인증 및 권한관리</li>
-                                    <li>• 접근통제 / 암호화 적용</li>
-                                    <li>• 시스템 및 서비스 관리</li>
-                                    <li>• 사고 예방 및 대응</li>
-                                    <li>• 재해복구</li>
+                                    {criteria2List.split('|').map((item: string, index: number) => (
+                                        <li key={index}>• {item}</li>
+                                    ))}
                                 </ul>
                             </div>
 
@@ -143,36 +144,16 @@ const ISMSP = () => {
                             <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 rounded-xl p-6 border border-purple-500/30">
                                 <div className="text-center mb-4">
                                     <div className="text-5xl mb-2">👤</div>
-                                    <h3 className="text-2xl font-bold text-white mb-1">21개</h3>
-                                    <p className="text-purple-300 font-semibold">개인정보 처리단계별</p>
+                                    <h3 className="text-2xl font-bold text-white mb-1">{criteria3Count}</h3>
+                                    <p className="text-purple-300 font-semibold">{criteria3Title}</p>
                                 </div>
                                 <ul className="space-y-2 text-gray-300 text-sm">
-                                    <li>• 개인정보 수집 시 보호조치</li>
-                                    <li>• 보유 및 이용 시 보호조치</li>
-                                    <li>• 제공 시 보호조치</li>
-                                    <li>• 파기 시 보호조치</li>
-                                    <li>• 정보주체 권리보호</li>
+                                    {criteria3List.split('|').map((item: string, index: number) => (
+                                        <li key={index}>• {item}</li>
+                                    ))}
                                 </ul>
                             </div>
                         </div>
-
-                        {/* 
-                            ============================================
-                            이미지 삽입 위치 #1: ISMS-P 인증기준 구조도
-                            ============================================
-                            여기에 ISMS-P의 3가지 인증기준 (관리체계 16개 + 보호대책 64개 + 
-                            개인정보 처리 21개 = 총 101개)을 시각화한 구조도 이미지를 
-                            삽입하면 좋습니다.
-                            
-                            예시 코드:
-                            <div className="my-8">
-                                <img 
-                                    src="/path/to/isms-p-structure.png" 
-                                    alt="ISMS-P 인증기준 구조" 
-                                    className="w-full max-w-4xl mx-auto rounded-lg shadow-xl"
-                                />
-                            </div>
-                        */}
                     </motion.div>
 
                     {/* 인증 대상 */}
@@ -182,29 +163,29 @@ const ISMSP = () => {
                         transition={{ duration: 0.6, delay: 0.6 }}
                         className="mb-16"
                     >
-                        <h2 className="text-3xl font-bold text-white mb-6">인증 대상</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">{targetTitle}</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
                                 <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                                     <span className="text-purple-400">⚡</span>
-                                    의무 인증 대상
+                                    {target1Title}
                                 </h3>
                                 <ul className="space-y-2 text-gray-300">
-                                    <li>• 정보통신서비스 부문 전년도 매출액 100억원 이상</li>
-                                    <li>• 정보통신서비스 부문 전년도 3개월간 일일평균 이용자 수 100만명 이상</li>
-                                    <li>• 개인정보 처리자 중 전년도 말 기준 직전 3개월간 개인정보가 저장·관리되고 있는 이용자 수가 일일평균 100만명 이상</li>
+                                    {target1List.split('|').map((item: string, index: number) => (
+                                        <li key={index}>• {item}</li>
+                                    ))}
                                 </ul>
                             </div>
 
                             <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
                                 <h3 className="text-xl font-bold text-white mb-4 flex items-center gap-2">
                                     <span className="text-pink-400">✓</span>
-                                    자율 인증 대상
+                                    {target2Title}
                                 </h3>
                                 <ul className="space-y-2 text-gray-300">
-                                    <li>• 의무 인증 대상이 아닌 모든 기업 및 기관</li>
-                                    <li>• 정보보호 및 개인정보보호 관리 수준 향상을 원하는 조직</li>
-                                    <li>• 고객 신뢰 확보 및 경쟁력 강화를 원하는 조직</li>
+                                    {target2List.split('|').map((item: string, index: number) => (
+                                        <li key={index}>• {item}</li>
+                                    ))}
                                 </ul>
                             </div>
                         </div>
@@ -217,15 +198,15 @@ const ISMSP = () => {
                         transition={{ duration: 0.6, delay: 0.8 }}
                         className="mb-16"
                     >
-                        <h2 className="text-3xl font-bold text-white mb-6">인증 효과</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">{effectsTitle}</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                             {[
-                                { icon: '📜', title: '법적 의무 준수', desc: '정보통신망법 및 개인정보보호법 준수 입증' },
-                                { icon: '🏅', title: '신뢰성 향상', desc: '고객 및 이해관계자에 대한 신뢰성 제고' },
-                                { icon: '🔒', title: '정보자산 보호', desc: '체계적인 정보보호 및 개인정보보호 관리' },
-                                { icon: '⚖️', title: '리스크 관리', desc: '정보보호 및 개인정보 관련 리스크 최소화' },
-                                { icon: '💰', title: '과태료 면제', desc: '인증 획득 시 과태료 경감 혜택' },
-                                { icon: '🎯', title: '경쟁력 강화', desc: '입찰 및 사업 수주 시 가점 부여' },
+                                { icon: '📜', title: effect1Title, desc: effect1Desc },
+                                { icon: '🏅', title: effect2Title, desc: effect2Desc },
+                                { icon: '🔒', title: effect3Title, desc: effect3Desc },
+                                { icon: '⚖️', title: effect4Title, desc: effect4Desc },
+                                { icon: '💰', title: effect5Title, desc: effect5Desc },
+                                { icon: '🎯', title: effect6Title, desc: effect6Desc },
                             ].map((item, index) => (
                                 <div key={index} className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 rounded-xl p-6 border border-purple-500/20 hover:border-purple-500/50 transition-all">
                                     <div className="text-4xl mb-3">{item.icon}</div>
@@ -242,7 +223,7 @@ const ISMSP = () => {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 1.0 }}
                     >
-                        <h2 className="text-3xl font-bold text-white mb-6">AISEURE ISMS-P 컨설팅 서비스</h2>
+                        <h2 className="text-3xl font-bold text-white mb-6">{consultingTitle}</h2>
                         <div className="bg-gradient-to-br from-purple-900/30 to-pink-900/30 rounded-xl p-8 border border-purple-500/30">
                             <div className="space-y-6">
                                 <div className="flex items-start gap-4">
@@ -250,9 +231,9 @@ const ISMSP = () => {
                                         1
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-bold text-white mb-2">Risk Assessment (위험 평가)</h4>
+                                        <h4 className="text-xl font-bold text-white mb-2">{consultingStep1Title}</h4>
                                         <p className="text-gray-300">
-                                            조직의 정보자산을 식별하고 위험을 평가하여 적절한 보호대책을 수립합니다.
+                                            {consultingStep1Desc}
                                         </p>
                                     </div>
                                 </div>
@@ -262,9 +243,9 @@ const ISMSP = () => {
                                         2
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-bold text-white mb-2">Control Implementation (통제 구현)</h4>
+                                        <h4 className="text-xl font-bold text-white mb-2">{consultingStep2Title}</h4>
                                         <p className="text-gray-300">
-                                            ISMS-P 인증기준에 따른 101개 통제항목을 조직 환경에 맞게 구현합니다.
+                                            {consultingStep2Desc}
                                         </p>
                                     </div>
                                 </div>
@@ -274,9 +255,9 @@ const ISMSP = () => {
                                         3
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-bold text-white mb-2">Certification Readiness (인증 준비)</h4>
+                                        <h4 className="text-xl font-bold text-white mb-2">{consultingStep3Title}</h4>
                                         <p className="text-gray-300">
-                                            모의 심사를 통해 인증 준비 상태를 점검하고 미비점을 개선합니다.
+                                            {consultingStep3Desc}
                                         </p>
                                     </div>
                                 </div>
@@ -286,9 +267,9 @@ const ISMSP = () => {
                                         4
                                     </div>
                                     <div>
-                                        <h4 className="text-xl font-bold text-white mb-2">Continuous Improvement (지속적 개선)</h4>
+                                        <h4 className="text-xl font-bold text-white mb-2">{consultingStep4Title}</h4>
                                         <p className="text-gray-300">
-                                            인증 획득 후에도 관리체계를 지속적으로 개선하고 갱신 심사를 지원합니다.
+                                            {consultingStep4Desc}
                                         </p>
                                     </div>
                                 </div>
