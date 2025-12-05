@@ -26,7 +26,7 @@ const ContactForm = () => {
         e.preventDefault();
         setStatus('submitting');
 
-        const scriptUrl = 'https://script.google.com/macros/s/AKfycbyM8DV2xqbD4K1nbNBzX41H24-9-b1wtWWDb3oNP6e7B6iXY5iya9v6yo7Tkpui9OAwHA/exec';
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbwOD2DLvJehRQKytQJbxZfRDPa1kP8QBDFqoqG-pI9eb8pckzRSanh9clQjSBHnudgc6w/exec';
 
         try {
             const formDataObj = new FormData();
@@ -132,7 +132,7 @@ const ContactForm = () => {
                     rows={4}
                     value={formData.message}
                     onChange={handleChange}
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+                    className="w-full rounded-md border border-gray-300 px-3 py-2 text-gray-900 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
                 ></textarea>
             </div>
 
